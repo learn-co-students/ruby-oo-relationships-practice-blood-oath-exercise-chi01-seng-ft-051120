@@ -72,10 +72,7 @@ class Follower
     end
 
     def fellow_cult_members 
-        my_cults = Cult.all.select do |cult|
-            cult.followers.include?(self)
-        end 
-        my_cults_members = my_cults.map do |cult|
+        my_cults_members = cults.map do |cult|
             cult.followers 
         end 
         my_cults_flattened = my_cults_members.flatten 

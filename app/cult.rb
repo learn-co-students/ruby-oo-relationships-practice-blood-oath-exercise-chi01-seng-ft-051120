@@ -13,7 +13,6 @@ class Cult
         @founding_year = founding_year 
         @slogan = slogan
         @minimum_age = minimum_age
-        @followers = []
         
         @@all << self 
     end 
@@ -24,6 +23,15 @@ class Cult
         end 
         date = Time.now.strftime("%Y-%m-%d")
         BloodOath.new(self, follower, date)
+    end 
+
+    def followers 
+        my_blood_oaths = BloodOath.select do |blood_oath|
+            blood_oath.cult == self 
+        end 
+        my_blood_oaths.map do |blood_oath|
+            blood_oath.follower 
+        end 
     end 
 
     def cult_population
@@ -56,10 +64,8 @@ class Cult
         followers_ages = self.followers.map do |follower|
             follower.age 
         end 
-        followers_total_age = followers_ages.reduce(0) do |sum, num|
-            sum + num 
-        end 
-        (followers_total_age / self.followers.count).to_f
+        followers_total_age = followers_ages.sum
+        (followers_total_age / self.followers_ages.count).to_f
     end 
 
     def followers_mottos 

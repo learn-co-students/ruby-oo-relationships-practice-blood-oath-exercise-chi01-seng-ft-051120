@@ -11,8 +11,6 @@ class BloodOath
         @follower = follower 
         @initiation_date = initiation_date 
 
-        cult.followers << follower
-        
         @@all << self 
     end 
 
